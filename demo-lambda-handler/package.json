@@ -1,0 +1,17 @@
+{
+  "name": "demo-lambda-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-cdk/aws-lambda": "^1.204.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.204.0",
+    "axios": "^1.6.7"
+  }
+}
