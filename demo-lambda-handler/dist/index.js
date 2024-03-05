@@ -8,26 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = exports.simulateGenerateAndSetData = void 0;
-const axios_1 = __importDefault(require("axios"));
 const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 const simulateGenerateAndSetData = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('simulateGenerateAndSetData: sleeping for 10 seconds...');
     yield sleep(10000);
-    const setResponse = yield axios_1.default.post('http://localhost:3000/set', { data: 'Hello, World!' });
-    console.log(`set response: ${JSON.stringify(setResponse)}`);
+    const response = yield fetch('http://127.0.0.1:8888/set', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: 'Hello, World!' })
+    });
+    const data = yield response.json();
+    console.log(`set response: ${JSON.stringify(data)}`);
 });
 exports.simulateGenerateAndSetData = simulateGenerateAndSetData;
 const handler = function (event) {
     return __awaiter(this, void 0, void 0, function* () {
-        const getResponse = yield axios_1.default.get('http://localhost:3000/get');
+        console.log('handler: fetching data...');
+        const response = yield fetch('http://127.0.0.1:8888/get');
         yield (0, exports.simulateGenerateAndSetData)();
-        console.log(`get response: ${JSON.stringify(getResponse)}`);
+        const data = yield response.json();
+        console.log(`get response: ${JSON.stringify(data)}`);
     });
 };
 exports.handler = handler;

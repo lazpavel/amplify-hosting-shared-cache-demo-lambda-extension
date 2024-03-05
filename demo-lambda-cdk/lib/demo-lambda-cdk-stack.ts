@@ -11,14 +11,14 @@ export class DemoLambdaCdkStack extends cdk.Stack {
       "DemoLambdaExtension",
       {
         compatibleRuntimes: [lambda.Runtime.NODEJS_LATEST],
-        code: lambda.Code.fromAsset("../demo-lambda-extension/target/lambda"),
+        code: lambda.Code.fromAsset("../demo-lambda-extension/target/lambda/demo-lambda-extension/bootstrap.zip"),
       }
     );
 
     const lambdaHandler = new lambda.Function(this, "DemoLambdaHandler", {
       runtime: lambda.Runtime.NODEJS_LATEST,
       handler: "dist/index.handler",
-      code: lambda.Code.fromAsset("../demo-lambda-handler/"),
+      code: lambda.Code.fromAsset("../demo-lambda-handler"),
       layers: [lambdaExtension],
     });
 

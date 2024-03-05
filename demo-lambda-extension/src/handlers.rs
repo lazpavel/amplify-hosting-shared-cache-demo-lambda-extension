@@ -1,5 +1,5 @@
-use log::info;
 use std::{collections::HashMap, convert::Infallible};
+use lambda_extension::tracing::info;
 use warp::http::StatusCode;
 use std::sync::Arc;
 use tokio::sync::Notify; 

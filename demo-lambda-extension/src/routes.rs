@@ -1,4 +1,5 @@
 use std::{convert::Infallible, collections::HashMap};
+use lambda_extension::tracing::info;
 use warp::Filter;
 use std::sync::Arc;
 use tokio::sync::Notify; 
@@ -6,6 +7,7 @@ use tokio::sync::Notify;
 use crate::handlers;
 
 pub fn cache_routes(can_shutdown: Arc<Notify>) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    info!("Setting up routes");
     get_item().or(set_item(can_shutdown))
 }
 
