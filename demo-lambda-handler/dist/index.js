@@ -23,17 +23,16 @@ const simulateGenerateAndSetData = () => __awaiter(void 0, void 0, void 0, funct
         },
         body: JSON.stringify({ data: 'Hello, World!' })
     });
-    const data = yield response.json();
-    console.log(`set response: ${JSON.stringify(data)}`);
+    console.log(`set response completed`);
 });
 exports.simulateGenerateAndSetData = simulateGenerateAndSetData;
 const handler = function (event) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('handler: fetching data...');
         const response = yield fetch('http://127.0.0.1:8888/get');
-        yield (0, exports.simulateGenerateAndSetData)();
-        const data = yield response.json();
-        console.log(`get response: ${JSON.stringify(data)}`);
+        (0, exports.simulateGenerateAndSetData)();
+        console.log(`get response completed`);
+        return null;
     });
 };
 exports.handler = handler;

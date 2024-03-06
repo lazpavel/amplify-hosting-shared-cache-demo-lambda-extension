@@ -12,15 +12,15 @@ export const simulateGenerateAndSetData = async () => {
     },
     body: JSON.stringify({ data: 'Hello, World!' })
   });
-  const data = await response.json();
-  console.log(`set response: ${JSON.stringify(data)}`);
+  
+  console.log(`set response completed`);
 };
 
 export const handler = async function(event: any) {
   console.log('handler: fetching data...');
   const response = await fetch('http://127.0.0.1:8888/get');
-  await simulateGenerateAndSetData();
+  simulateGenerateAndSetData();
 
-  const data = await response.json();
-  console.log(`get response: ${JSON.stringify(data)}`);
+  console.log(`get response completed`);
+  return null;
 };

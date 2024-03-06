@@ -10,8 +10,7 @@ export class DemoLambdaCdkStack extends cdk.Stack {
       this,
       "DemoLambdaExtension",
       {
-        compatibleRuntimes: [lambda.Runtime.NODEJS_LATEST],
-        code: lambda.Code.fromAsset("../demo-lambda-extension/target/lambda/demo-lambda-extension/bootstrap.zip"),
+        code: lambda.Code.fromAsset("../demo-lambda-extension/target/lambda/"),
       }
     );
 
