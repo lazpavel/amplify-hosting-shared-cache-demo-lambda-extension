@@ -33,7 +33,6 @@ async fn extension(event: LambdaEvent) -> Result<(), Error> {
             info!("Shutdown event received, waiting for can_shutdown notification");
             can_shutdown.notified().await;
             info!("can_shutdown notification received, shutting down");
-            // let _ = _server_task.await;
             info!("Server task completed, returning");
             Ok(())
         }
@@ -41,7 +40,6 @@ async fn extension(event: LambdaEvent) -> Result<(), Error> {
             info!("Invoke event received, waiting for can_shutdown notification");
             can_shutdown.notified().await;
             info!("can_shutdown notification received, shutting down");
-            // let _ = _server_task.await;
             info!("Server task completed, returning");
             Ok(())
         }
