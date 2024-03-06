@@ -19,3 +19,12 @@ pub async fn set_handler(
     notification.notify_one();
     Ok(StatusCode::CREATED)
 }
+
+
+pub async fn no_stale_handler(
+    notification: Arc<Notify>,
+) -> Result<impl warp::Reply, Infallible> {
+    info!("no stale handler");
+    notification.notify_one();
+    Ok(StatusCode::OK)
+}

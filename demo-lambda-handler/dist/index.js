@@ -15,7 +15,7 @@ const sleep = (ms) => {
 };
 const simulateGenerateAndSetData = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log('simulateGenerateAndSetData: sleeping for 10 seconds...');
-    yield sleep(10000);
+    // await sleep(10_000);
     const response = yield fetch('http://127.0.0.1:8888/set', {
         method: 'POST',
         headers: {

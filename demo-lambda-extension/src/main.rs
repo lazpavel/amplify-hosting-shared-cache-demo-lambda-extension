@@ -17,15 +17,8 @@ async fn async_work(can_shutdown: Arc<Notify>, server_started: Arc<Notify>) {
     server.await
 }
 
-async fn extension(event: LambdaEvent) -> Result<(), Error> {
+async fn extension(can_shutdown: Arc<Notify>, event: LambdaEvent) -> Result<(), Error> {
     info!("Received event: {:?}", event.next);
-    let can_shutdown = Arc::new(Notify::new());
-    let server_started = Arc::new(Notify::new());
-    let server_future = async_work(can_shutdown.clone(), server_started.clone());
-    let _ = tokio::spawn(server_future);
-    server_started.notified().await;
-    info!("Server started...");
-
     match event.next {
         NextEvent::Shutdown(_e) => {
             info!("Shutdown event received, waiting for can_shutdown notification");
@@ -48,7 +41,16 @@ async fn extension(event: LambdaEvent) -> Result<(), Error> {
 async fn main() -> Result<(), Error> {
     println!("Hello, world! Extension");
     // required to enable CloudWatch error logging by the runtime
+    let can_shutdown = Arc::new(Notify::new());
+    let server_started = Arc::new(Notify::new());
+    let server_future = async_work(can_shutdown.clone(), server_started.clone());
+    let _ = tokio::spawn(server_future);
+    server_started.notified().await;
+    info!("Server started...");
+
     tracing::init_default_subscriber();
     info!("Starting lambda extension");
-    lambda_extension::run(service_fn(extension)).await
+    lambda_extension::run(service_fn(|event| {
+        extension(can_shutdown.clone(), event)
+    })).await
 }

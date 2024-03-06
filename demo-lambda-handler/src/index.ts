@@ -4,7 +4,7 @@ const sleep = (ms: number): Promise<void> => {
 
 export const simulateGenerateAndSetData = async () => {
   console.log('simulateGenerateAndSetData: sleeping for 10 seconds...');
-  await sleep(10_000);
+  // await sleep(10_000);
   const response = await fetch('http://127.0.0.1:8888/set', { 
     method: 'POST',
     headers: {
