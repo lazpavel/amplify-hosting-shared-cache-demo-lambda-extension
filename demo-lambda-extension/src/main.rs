@@ -21,10 +21,8 @@ async fn extension(event: LambdaEvent) -> Result<(), Error> {
     info!("Received event: {:?}", event.next);
     let can_shutdown = Arc::new(Notify::new());
     let server_started = Arc::new(Notify::new());
-    // Spawn a future onto the runtime
-    
     let server_future = async_work(can_shutdown.clone(), server_started.clone());
-    let _server_task = tokio::spawn(server_future);
+    let _ = tokio::spawn(server_future);
     server_started.notified().await;
     info!("Server started...");
 
