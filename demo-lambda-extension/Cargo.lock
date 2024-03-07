@@ -135,6 +135,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "aws-sdk-lambda"
+version = "1.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c4714bdfe1171542377f84c1034b1c64e3e7544119765f205402ae159b5b9b4"
+dependencies = [
+ "aws-credential-types",
+ "aws-runtime",
+ "aws-smithy-async",
+ "aws-smithy-http",
+ "aws-smithy-json",
+ "aws-smithy-runtime",
+ "aws-smithy-runtime-api",
+ "aws-smithy-types",
+ "aws-types",
+ "bytes",
+ "http 0.2.11",
+ "once_cell",
+ "regex-lite",
+ "tracing",
+]
+
+[[package]]
 name = "aws-sdk-sso"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -335,6 +357,8 @@ dependencies = [
  "ryu",
  "serde",
  "time",
+ "tokio",
+ "tokio-util",
 ]
 
 [[package]]
@@ -508,6 +532,7 @@ name = "demo-lambda-extension"
 version = "0.1.0"
 dependencies = [
  "aws-config",
+ "aws-sdk-lambda",
  "aws-types",
  "futures",
  "lambda-extension",

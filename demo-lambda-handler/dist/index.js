@@ -8,31 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = exports.simulateGenerateAndSetData = void 0;
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const simulateGenerateAndSetData = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('simulateGenerateAndSetData: sleeping for 10 seconds...');
-    // await sleep(10_000);
-    const response = yield fetch('http://127.0.0.1:8888/set', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data: 'Hello, World!' })
-    });
-    console.log(`set response completed`);
-});
-exports.simulateGenerateAndSetData = simulateGenerateAndSetData;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.handler = void 0;
+const key_value_storage_1 = __importDefault(require("./key-value-storage"));
 const handler = function (event) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('handler: fetching data...');
-        const response = yield fetch('http://127.0.0.1:8888/get');
-        (0, exports.simulateGenerateAndSetData)();
-        console.log(`get response completed`);
-        return null;
+        console.log(`executing lambda handler: ${JSON.stringify(event)}`);
+        const { operation, key, data } = event;
+        const keyValueStorage = new key_value_storage_1.default({ framework: 'nuxt' });
+        if (operation === 'get') {
+            return yield keyValueStorage.get(key);
+        }
+        else if (operation === 'set') {
+            yield keyValueStorage.set(key, data);
+        }
+        else {
+            throw new Error(`Unknown operation: ${operation}`);
+        }
     });
 };
 exports.handler = handler;
