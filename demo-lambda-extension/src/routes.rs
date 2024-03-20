@@ -23,6 +23,7 @@ fn set_item(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     warp::path("set")
         .and(warp::post())
+        .and(warp::body::content_length_limit(5 * 1024 * 1024)) // 5 MB limit for request
         .and(json_body())
         .and(with_client(client))
         .and(with_notification(can_shutdown))
@@ -48,7 +49,7 @@ fn unblock_shutdown(
 
 fn json_body() -> impl Filter<Extract = (HashMap<String, String>,), Error = warp::Rejection> + Clone
 {
-    warp::body::content_length_limit(1024 * 16).and(warp::body::json())
+    warp::body::json()
 }
 
 fn with_notification(

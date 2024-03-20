@@ -16,6 +16,7 @@ export class DemoLambdaCdkStack extends cdk.Stack {
 
     const lambdaHandler = new lambda.Function(this, "DemoLambdaHandler", {
       runtime: lambda.Runtime.NODEJS_LATEST,
+      timeout: cdk.Duration.seconds(30),
       handler: "dist/index.handler",
       code: lambda.Code.fromAsset("../demo-lambda-handler"),
       layers: [lambdaExtension],
